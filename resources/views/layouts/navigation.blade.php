@@ -19,7 +19,7 @@
                         {{ __('Books') }}
                     </x-nav-link>
                     <x-nav-link :href="route('book-types.index')" :active="request()->routeIs('book-types.index')">
-                        {{ __('Book Types') }}
+                        {{ __('Book Categories') }}
                     </x-nav-link>
                 </div>
             </div>
