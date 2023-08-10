@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
+                        {{ __('Books') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('book-types.index')" :active="request()->routeIs('book-types.index')">
+                        {{ __('Book Types') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -83,7 +89,6 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
