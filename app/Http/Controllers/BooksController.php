@@ -13,9 +13,9 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('bookType')->get();
 
-        return view('books.index')->with(['books' => $books]);
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -25,7 +25,7 @@ class BooksController extends Controller
     {
         $bookTypes = BookType::all();
 
-        return view('books.create')->with(['bookTypes' => $bookTypes]);
+        return view('books.create', compact('bookTypes'));
     }
 
     /**
@@ -33,7 +33,25 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'category'  => ['required'],
+            'description' => ['required', 'string', 'max:255'],
+            'publisher' => ['required', 'string', 'max:255'],
+            'year' => ['required', 'integer'],
+            'stock' => ['required', 'integer'],
+        ]);
+
+        Book::create([
+            'BookTypeId'  => $request->category,
+            'BookName'      => $request->name,
+            'Description'   => $request->description,
+            'Publisher'     => $request->publisher,
+            'Year'          => $request->year,
+            'Stock'          => $request->stock,
+        ]);
+
+        return redirect()->route('books.index');
     }
 
     /**
@@ -41,7 +59,9 @@ class BooksController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $book = Book::with('bookType')->where('id', $id)->first();
+
+        return view('books.view', compact('book'));
     }
 
     /**
@@ -49,7 +69,10 @@ class BooksController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $book = Book::with('bookType')->where('id', $id)->first();
+        $bookTypes = BookType::all();
+
+        return view('books.edit', compact('book', 'bookTypes'));
     }
 
     /**
@@ -57,7 +80,27 @@ class BooksController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'category'  => ['required'],
+            'description' => ['required', 'string', 'max:255'],
+            'publisher' => ['required', 'string', 'max:255'],
+            'year' => ['required', 'integer'],
+            'stock' => ['required', 'integer'],
+        ]);
+
+        $data = [
+            'BookTypeId'  => $request->category,
+            'BookName'      => $request->name,
+            'Description'   => $request->description,
+            'Publisher'     => $request->publisher,
+            'Year'          => $request->year,
+            'Stock'          => $request->stock,
+        ];
+
+        Book::find($id)->update($data);
+
+        return redirect()->route('books.index');
     }
 
     /**
@@ -65,6 +108,8 @@ class BooksController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Book::find($id)->delete();
+
+        return redirect()->route('books.index');
     }
 }

@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/books', [BooksController::class, 'index'])->name('books.index');
     Route::get('/books/create', [BooksController::class, 'create'])->name('books.add');
+    Route::post('/books', [BooksController::class, 'store'])->name('books.store');
+    Route::get('/books/{id}', [BooksController::class, 'show'])->name('books.view');
+    Route::get('/books/edit/{id}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::get('/books/delete/{id}', [BooksController::class, 'destroy'])->name('books.delete');
+    Route::post('/books/{id}', [BooksController::class, 'update'])->name('books.update');
 
     Route::get('/book-types', [BookTypesController::class, 'index'])->name('book-types.index');
     Route::get('/book-types/create', [BookTypesController::class, 'create'])->name('book-types.add');

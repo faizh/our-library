@@ -35,21 +35,26 @@
                                         Action</th>
                                 </tr>
                             </thead>
-                            <tbody class=dark:bg-slate-800">
+                            <tbody class="dark:bg-slate-800">
+                                @foreach ($books as $book)
                                 <tr>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                        </td>
+                                        {{ $book->id }}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                        </td>
+                                        {{ $book->BookName }}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                                        </td>
+                                        {{ $book->bookType->BookType }}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                                        <a href="{{ route('books.view', $book->id) }}"><x-primary-button>Detail</x-primary-button></a>
+                                        <a href="{{ route('books.edit', $book->id) }}"><x-primary-button>Edit</x-primary-button></a>
+                                        <a href="{{ route('books.delete', $book->id) }}"><x-primary-button>Delete</x-primary-button>
                                         </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
