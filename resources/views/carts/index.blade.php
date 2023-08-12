@@ -99,6 +99,10 @@
             success:function(data) {
                 alert(data.msg);
                 toggleBtnUpdate(cart_id, 'hide');
+
+                if ( !data.status ) {
+                    document.getElementById("qty-cart-" + cart_id).value = data.qty;
+                }
             }
         });
     }

@@ -111,7 +111,8 @@ class CartController extends Controller
         if ( $book_stock <= $qty ) { /** additional checking with existing cart stock */
             return response()->json([
                 'status'    => false,
-                'msg'       => 'Unavailable Stock!'
+                'msg'       => 'Unavailable Stock!',
+                'qty'       => $cart->qty
             ]);
         }
 
