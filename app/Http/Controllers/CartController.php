@@ -14,7 +14,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::where('CreatedBy', Auth::id())->get();
+        $carts = Cart::with('book')
+                ->where('CreatedBy', Auth::id())
+                ->get();
 
         return view('carts.index', compact('carts'));
     }
@@ -92,9 +94,34 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'cart_id'   => 'required',
+            'qty'       => 'required'
+        ]);
+
+        $cart_id    = $request->cart_id;
+        $qty        = $request->qty;
+
+        /** stock checking */
+        $cart       = Cart::find($cart_id);
+        $book_stock = Book::find($cart->BookId)->Stock;
+
+        if ( $book_stock <= $qty ) { /** additional checking with existing cart stock */
+            return response()->json([
+                'status'    => false,
+                'msg'       => 'Unavailable Stock!'
+            ]);
+        }
+
+        $cart->qty = $qty;
+        $cart->save();
+
+        return response()->json([
+            'status'    => true,
+            'msg'       => 'Stock Updated!'
+        ]);
     }
 
     /**
@@ -102,6 +129,8 @@ class CartController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Cart::find($id)->delete();
+
+        return redirect()->route('carts.index');
     }
 }

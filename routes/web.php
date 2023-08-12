@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('/carts/add', [CartController::class, 'store'])->name('carts.add');
     Route::get('/carts/checkout', [CartController::class, 'index'])->name('carts.checkout');
+    Route::get('/carts/delete/{id}', [CartController::class, 'destroy'])->name('carts.delete');
+    Route::patch('/carts/update', [CartController::class, 'update'])->name('carts.update');
 });
 
 require __DIR__.'/auth.php';

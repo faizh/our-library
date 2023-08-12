@@ -14,4 +14,8 @@ class Cart extends Model
         'qty',
         'CreatedBy'
     ];
+
+    public function book() {
+        return $this->belongsTo(Book::class, 'BookId', 'id');
+    }
 }
