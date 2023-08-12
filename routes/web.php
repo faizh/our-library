@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BookTypesController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/book-types/edit/{id}', [BookTypesController::class, 'edit'])->name('book-types.edit');
     Route::post('/book-types/{id}', [BookTypesController::class, 'update'])->name('book-types.update');
     Route::get('/book-types/delete/{id}', [BookTypesController::class, 'destroy'])->name('book-types.delete');
+
+    Route::get('/carts', [CartController::class, 'index'])->name('carts.index');
+    Route::post('/carts/add', [CartController::class, 'store'])->name('carts.add');
+    Route::get('/carts/checkout', [CartController::class, 'index'])->name('carts.checkout');
 });
 
 require __DIR__.'/auth.php';

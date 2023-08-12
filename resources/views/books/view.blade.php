@@ -56,6 +56,16 @@
                         </div>
                 
                     </form>
+
+                    <div class="cart mt-5">
+                        <form action="{{ route('carts.add') }}" method="POST">
+                            @csrf
+                            @method('post')
+
+                            <input type="hidden" value="{{ $book->id }}" name="book_id" />
+                            <x-primary-button style="background-color: orange;">{{ __('Add to Cart') }}</x-primary-button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

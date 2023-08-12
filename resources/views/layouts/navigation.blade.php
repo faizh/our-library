@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('book-types.index')" :active="request()->routeIs('book-types.index')">
                         {{ __('Book Categories') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('carts.index')" :active="request()->routeIs('carts.index')">
+                        {{ __('Carts') }}
+                    </x-nav-link>
                 </div>
             </div>
 
