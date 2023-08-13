@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
     function list_report() {
-        return view('reports.list');
+        $txds = TransactionDetail::getListBooksLoan();
+
+        return view('reports.list', compact('txds'));
     }
 
     function chart_report() {
@@ -21,7 +24,7 @@ class ReportController extends Controller
             $labels[] = $tx->BookName;
             $values[] = $tx->loan;
         }
-        
+
         return view('reports.chart', compact('tx_pie', 'tx_bar', 'labels', 'values'));
     }
 }
