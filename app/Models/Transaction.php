@@ -30,12 +30,24 @@ class Transaction extends Model
 
     }
 
-    public static function getDataForChart() {
+    public static function getDataForPieChart() {
         $tx = DB::select("SELECT 
                         COUNT(IF(t.`FineTotal` = 0, 1, NULL)) AS on_time,
                         COUNT(IF(t.`FineTotal` > 0, 1 , NULL)) AS late
                         FROM `transactions` t;");
         
         return $tx[0];
+    }
+
+    public static function getDataForBarChart() {
+        $tx = DB::select("SELECT 
+                            b.`BookName`,
+                            SUM(td.`Qty`) AS loan
+                            FROM `transaction_details` td
+                            JOIN `books` b ON b.`id` = td.`BookId`
+                            GROUP BY td.`BookId`, b.`BookName`
+                            ORDER BY loan DESC");
+        
+        return $tx;
     }
 }

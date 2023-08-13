@@ -12,8 +12,16 @@ class ReportController extends Controller
     }
 
     function chart_report() {
-        $tx = Transaction::getDataForChart();
+        $tx_pie = Transaction::getDataForPieChart();
+        $tx_bar = Transaction::getDataForBarChart();
 
-        return view('reports.chart', compact('tx'));
+        $labels = array();
+        $values = array();
+        foreach ($tx_bar as $tx) {
+            $labels[] = $tx->BookName;
+            $values[] = $tx->loan;
+        }
+        
+        return view('reports.chart', compact('tx_pie', 'tx_bar', 'labels', 'values'));
     }
 }

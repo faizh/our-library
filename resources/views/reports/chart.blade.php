@@ -13,7 +13,22 @@
                         <span>Book's Return Time</span>
                     </div>
                     <div class="mt-5">
-                        <canvas id="myChart" height="100px"></canvas>
+                        <canvas id="returnTime" height="500px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div>
+                        <span>Bestseller Book</span>
+                    </div>
+                    <div class="mt-5">
+                        <canvas id="best-seller" height="500px"></canvas>
                     </div>
                 </div>
             </div>
@@ -27,7 +42,7 @@
   
 <script type="text/javascript">
     var labels =  ["On Time", "Late"];
-    var users =  [{{ $tx->on_time }}, {{ $tx->late }}];
+    var users =  [{{ $tx_pie->on_time }}, {{ $tx_pie->late }}];
   
       const data = {
         labels: labels,
@@ -44,12 +59,42 @@
       const config = {
         type: 'pie',
         data: data,
-        options: {}
+        options: {
+            maintainAspectRatio: false,
+        }
       };
   
       const myChart = new Chart(
-        document.getElementById('myChart'),
+        document.getElementById('returnTime'),
         config
+      );
+  
+</script>
+
+<script type="text/javascript">
+    var labels =  [ <?= '"'.implode('","', $labels).'"' ?>];
+    var users =  [ <?= '"'.implode('","', $values).'"' ?>];
+  
+      const data2 = {
+        labels: labels,
+        datasets: [{
+            label: ['Best Seller'],
+            backgroundColor: 'rgba(78, 164, 181)',
+            data: users,
+        }]
+      };
+  
+      const config2 = {
+        type: 'bar',
+        data: data2,
+        options: {
+            maintainAspectRatio: false,
+        }
+      };
+  
+      const myChart2 = new Chart(
+        document.getElementById('best-seller'),
+        config2
       );
   
 </script>
