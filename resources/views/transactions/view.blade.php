@@ -1,3 +1,7 @@
+@php
+    use App\Models\Roles;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -49,14 +53,16 @@
                             </tr>
                         </table>                
 
-                        @if ($transaction->FineTotal === NULL)
-                        <div style="float: right; margin: 20px">
-                            <form method="post" action="{{ route('transactions.return', $transaction->id)}}">
-                                @csrf
-                                @method('post')
-                                <x-primary-button style="background: orange">Return</x-primary-button>
-                            </form>
-                        </div>
+                        @if ( Auth::user()->role_id == Roles::getRoleAdministrator() )
+                            @if ($transaction->FineTotal === NULL)
+                                <div style="float: right; margin: 20px">
+                                    <form method="post" action="{{ route('transactions.return', $transaction->id)}}">
+                                        @csrf
+                                        @method('post')
+                                        <x-primary-button style="background: orange">Return</x-primary-button>
+                                    </form>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>
