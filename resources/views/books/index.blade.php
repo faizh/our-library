@@ -1,3 +1,7 @@
+@php
+    use App\Models\Roles;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -11,12 +15,14 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("List of OurBooks!") }}
 
-                    <div class="mt-2">
-                        <div style="float: right">
-                            <a href="{{ route('books.add') }}">
-                                <x-primary-button>{{ __('Add new Book') }}</x-primary-button>
-                            </a>
-                        </div>
+                    <div class="mt-5">
+                        @if ( Auth::user()->role_id == Roles::getRoleAdministrator() )
+                            <div style="float: right">
+                                <a href="{{ route('books.add') }}">
+                                    <x-primary-button>{{ __('Add new Book') }}</x-primary-button>
+                                </a>
+                            </div>
+                        @endif
 
                         <table class="border-collapse table-auto w-full text-sm">
                             <thead>
@@ -50,8 +56,11 @@
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
                                         <a href="{{ route('books.view', $book->id) }}"><x-primary-button>Detail</x-primary-button></a>
-                                        <a href="{{ route('books.edit', $book->id) }}"><x-primary-button>Edit</x-primary-button></a>
-                                        <a href="{{ route('books.delete', $book->id) }}"><x-primary-button>Delete</x-primary-button>
+
+                                        @if ( Auth::user()->role_id == Roles::getRoleAdministrator() )
+                                            <a href="{{ route('books.edit', $book->id) }}"><x-primary-button>Edit</x-primary-button></a>
+                                            <a href="{{ route('books.delete', $book->id) }}"><x-primary-button>Delete</x-primary-button>
+                                        @endif
                                         </td>
                                 </tr>
                                 @endforeach
