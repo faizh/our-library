@@ -52,7 +52,7 @@
                                         <td
                                             class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
                                             <a href="{{ route('carts.delete', $cart->id) }}"><x-primary-button style="background: red; color: white;">Delete</x-primary-button></a>
-                                            <a href="#!" hidden="hidden" id="update-btn-{{ $cart->id }}"><x-primary-button style="background: orange;" onclick="updateStock({{ $cart->id }})">Update Stock</x-primary-button></a>
+                                            <a href="#!" hidden="hidden" id="update-btn-{{ $cart->id }}"><x-primary-button style="background: orange;" onclick="updateQty({{ $cart->id }})">Update Qty</x-primary-button></a>
                                             </td>
                                     </tr>
                                     @endforeach
@@ -85,7 +85,7 @@
         }
     }
 
-    function updateStock(cart_id) {
+    function updateQty(cart_id) {
         var qty = document.getElementById("qty-cart-" + cart_id).value;
         
         $.ajax({

@@ -54,9 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/carts/update', [CartController::class, 'update'])->name('carts.update');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
-    Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.view');
+    Route::get('/transactions/detail/{id}', [TransactionController::class, 'show'])->name('transactions.view');
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::post('/transactions/return/{id}', [TransactionController::class, 'return'])->name('transactions.return');
 });
 
 require __DIR__.'/auth.php';

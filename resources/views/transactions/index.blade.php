@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Transations') }}
+            {{ __('Transactions') }}
         </h2>
     </x-slot>
 
@@ -54,7 +54,7 @@
                                     </td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                    <a href="{{ route('transactions.view', $trx->id) }}"><x-primary-button>Detail</x-primary-button></a>
+                                        <a href="{{ route('transactions.view', $trx->id) }}"><x-primary-button>Detail</x-primary-button></a>
                                     </td>
                                 </tr>
                                 @endforeach

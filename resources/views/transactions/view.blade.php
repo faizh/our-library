@@ -48,6 +48,16 @@
                                 </td>
                             </tr>
                         </table>                
+
+                        @if ($transaction->FineTotal == NULL)
+                        <div style="float: right; margin: 20px">
+                            <form method="post" action="{{ route('transactions.return', $transaction->id)}}">
+                                @csrf
+                                @method('post')
+                                <x-primary-button style="background: orange">Return</x-primary-button>
+                            </form>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
