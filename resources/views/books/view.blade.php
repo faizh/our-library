@@ -1,3 +1,7 @@
+@php
+    use App\Models\Roles;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -57,20 +61,22 @@
                 
                     </form>
 
-                    <div class="cart mt-5">
-                        @if ($book->Stock > 0)
-                            <form action="{{ route('carts.add') }}" method="POST">
-                                @csrf
-                                @method('post')
+                    @if ( Auth::user()->role_id == Roles::getRoleUser() )
+                        <div class="cart mt-5">
+                            @if ($book->Stock > 0)
+                                <form action="{{ route('carts.add') }}" method="POST">
+                                    @csrf
+                                    @method('post')
 
-                                <input type="hidden" value="{{ $book->id }}" name="book_id" />
-                                <x-primary-button style="background-color: orange;">{{ __('Add to Cart') }}</x-primary-button>
-                            </form>
-                        @else 
-                            <x-primary-button style="background-color: grey;">{{ __('Out of Stock!') }}</x-primary-button>
-                        @endif
-                        
-                    </div>
+                                    <input type="hidden" value="{{ $book->id }}" name="book_id" />
+                                    <x-primary-button style="background-color: orange;">{{ __('Add to Cart') }}</x-primary-button>
+                                </form>
+                            @else 
+                                <x-primary-button style="background-color: grey;">{{ __('Out of Stock!') }}</x-primary-button>
+                            @endif
+                            
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
