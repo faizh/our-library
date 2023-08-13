@@ -132,7 +132,13 @@ class TransactionController extends Controller
         $fine_days      = $fine_days < 0 ? 0 : $fine_days;
         $fine_total     = 0;
         foreach ($trx_detail as $t) {
-            $fine = $fine_days * TransactionController::FINE_PER_DAY * $t->Qty;
+            $fine = $fine_days * TransactionController::FINE_PER_DAY;
+
+            if ($fine > TransactionController::FINE_MAX) {
+                $fine = TransactionController::FINE_MAX;
+            }
+
+            $fine = $fine * $t->qty;
 
             $td = TransactionDetail::find($t->id);
             $td->ReturnDate = date('Y-m-d');
