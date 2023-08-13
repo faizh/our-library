@@ -37,15 +37,18 @@ Route::group(['middleware' => ['auth']], function() {
     
     Route::group(['prefix' => 'books'], function() {
         Route::get('/', [BooksController::class, 'index'])->name('books.index');
-        Route::get('/create', [BooksController::class, 'create'])->name('books.add');
-        Route::post('/', [BooksController::class, 'store'])->name('books.store');
         Route::get('/{id}', [BooksController::class, 'show'])->name('books.view');
-        Route::get('/edit/{id}', [BooksController::class, 'edit'])->name('books.edit');
-        Route::get('/delete/{id}', [BooksController::class, 'destroy'])->name('books.delete');
-        Route::post('/{id}', [BooksController::class, 'update'])->name('books.update');
+
+        Route::middleware('is.admin')->group(function() {
+            Route::get('/create', [BooksController::class, 'create'])->name('books.add');
+            Route::post('/', [BooksController::class, 'store'])->name('books.store');
+            Route::get('/edit/{id}', [BooksController::class, 'edit'])->name('books.edit');
+            Route::get('/delete/{id}', [BooksController::class, 'destroy'])->name('books.delete');
+            Route::post('/{id}', [BooksController::class, 'update'])->name('books.update');
+        });
     });
 
-    Route::group(['prefix' => 'carts'], function() {
+    Route::group(['prefix' => 'carts', 'middleware' => ['is.user']], function() {
         Route::get('/', [CartController::class, 'index'])->name('carts.index');
         Route::post('/add', [CartController::class, 'store'])->name('carts.add');
         Route::get('/checkout', [CartController::class, 'index'])->name('carts.checkout');
@@ -53,7 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::patch('/update', [CartController::class, 'update'])->name('carts.update'); 
     });
 
-    Route::group(['prefix' => 'book-types'], function() {
+    Route::group(['prefix' => 'book-types', 'middleware' => 'is.admin'], function() {
         Route::get('/', [BookTypesController::class, 'index'])->name('book-types.index');
         Route::get('/create', [BookTypesController::class, 'create'])->name('book-types.add');
         Route::post('/', [BookTypesController::class, 'store'])->name('book-types.store');
@@ -67,10 +70,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/detail/{id}', [TransactionController::class, 'show'])->name('transactions.view');
         Route::get('/create', [TransactionController::class, 'create'])->name('transactions.create');
         Route::post('/', [TransactionController::class, 'store'])->name('transactions.store');
-        Route::post('/return/{id}', [TransactionController::class, 'return'])->name('transactions.return');
+
+        Route::middleware('is.admin')->group(function() {
+            Route::post('/return/{id}', [TransactionController::class, 'return'])->name('transactions.return'); 
+        });
     });
 
-    Route::group(['prefix' => 'reports'], function() {
+    Route::group(['prefix' => 'reports', 'middleware' => 'is.admin'], function() {
         Route::get('/list', [ReportController::class, 'list_report'])->name('reports.list');
         Route::get('/chart', [ReportController::class, 'chart_report'])->name('reports.chart');
     });

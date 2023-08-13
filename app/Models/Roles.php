@@ -9,10 +9,10 @@ class Roles extends Model
 {
     use HasFactory;
 
-    public static function getRoleUser() {
-        return "1";
+public static function getRoleUser() {
+        return 1;
     }
     public static function getRoleAdministrator() {
-        return "2";
+        return 2;
     }
 }
