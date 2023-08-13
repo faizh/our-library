@@ -16,4 +16,10 @@ class TransactionDetail extends Model
         'FineDays',
         'Fine'
     ];
+
+    public function book() {
+        // return $this->belongsToMany(Book::class, TransactionDetail::class, 'id', 'BookId');
+        return $this->belongsTo(Book::class, 'BookId', 'id');
+    }
+    
 }

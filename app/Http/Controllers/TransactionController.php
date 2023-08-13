@@ -77,7 +77,15 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transaction = Transaction::with('user')
+                        ->where('id', $id)
+                        ->first();
+
+        $transaction_details = TransactionDetail::with('book')
+                                ->where('TransId', $id)
+                                ->get();
+        
+        return view('transactions.view', compact('transaction', 'transaction_details'));
     }
 
     /**
