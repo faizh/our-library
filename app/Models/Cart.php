@@ -18,4 +18,8 @@ class Cart extends Model
     public function book() {
         return $this->belongsTo(Book::class, 'BookId', 'id');
     }
+
+    public function books() {
+        return $this->belongsToMany(Book::class, Cart::class, 'id', 'BookId');
+    }
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BookTypesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +52,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/carts/checkout', [CartController::class, 'index'])->name('carts.checkout');
     Route::get('/carts/delete/{id}', [CartController::class, 'destroy'])->name('carts.delete');
     Route::patch('/carts/update', [CartController::class, 'update'])->name('carts.update');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.view');
+    Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 });
 
 require __DIR__.'/auth.php';

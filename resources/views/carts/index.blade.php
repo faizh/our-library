@@ -14,7 +14,7 @@
                     @if (count($carts) > 0)
                         <div class="mt-2">
                             <div style="float: right">
-                                <a href="{{ route('carts.checkout') }}">
+                                <a href="{{ route('transactions.create') }}">
                                     <x-primary-button>{{ __('Checkout') }}</x-primary-button>
                                 </a>
                             </div>
