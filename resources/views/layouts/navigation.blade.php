@@ -1,3 +1,7 @@
+@php
+    use App\Models\Roles;
+@endphp
+
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,24 +19,36 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
+
+                    <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.*')">
                         {{ __('Books') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('book-types.index')" :active="request()->routeIs('book-types.index')">
+
+                    @if ( Auth::user()->role_id == Roles::getRoleAdministrator() )
+                        <x-nav-link :href="route('book-types.index')" :active="request()->routeIs('book-types.*')">
                         {{ __('Book Categories') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('carts.index')" :active="request()->routeIs('carts.index')">
-                        {{ __('Carts') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
+                    @endif
+
+                    @if ( Auth::user()->role_id == Roles::getRoleUser() )
+                        <x-nav-link :href="route('carts.index')" :active="request()->routeIs('carts.*')">
+                            {{ __('Carts') }}
+                        </x-nav-link>
+                    @endif
+
+                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
                         {{ __('Transactions') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('reports.list')" :active="request()->routeIs('reports.list')">
-                        {{ __('Reports List') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('reports.chart')" :active="request()->routeIs('reports.chart')">
-                        {{ __('Reports Chart') }}
-                    </x-nav-link>
+
+                    @if ( Auth::user()->role_id == Roles::getRoleAdministrator() )
+                        <x-nav-link :href="route('reports.list')" :active="request()->routeIs('reports.list')">
+                            {{ __('Reports List') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('reports.chart')" :active="request()->routeIs('reports.chart')">
+                            {{ __('Reports Chart') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
