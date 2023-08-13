@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Roles;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use DateTime;
@@ -20,7 +21,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('CreatedBy', Auth::id())->get();
+        if(Auth::user()->role_id == Roles::getRoleAdministrator()) {
+            $transactions = Transaction::all();
+        } else {
+            $transactions = Transaction::where('CreatedBy', Auth::id())->get();
+        }
 
         return view('transactions.index', compact('transactions'));
     }
