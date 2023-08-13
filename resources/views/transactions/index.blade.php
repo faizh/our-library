@@ -46,7 +46,7 @@
                                         {{ date_format(date_add(date_create($trx->TransDate), date_interval_create_from_date_string("1 days")), 'l, d F Y') }}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                        @if ($trx->FineTotal == NULL)
+                                        @if ($trx->FineTotal === NULL)
                                             {{ "Not Returned Yet"}}
                                         @else 
                                             {{ "Returned" }}

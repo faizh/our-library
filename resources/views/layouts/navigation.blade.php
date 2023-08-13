@@ -27,6 +27,12 @@
                     <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
                         {{ __('Transactions') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('reports.list')" :active="request()->routeIs('reports.list')">
+                        {{ __('Reports List') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('reports.chart')" :active="request()->routeIs('reports.chart')">
+                        {{ __('Reports Chart') }}
+                    </x-nav-link>
                 </div>
             </div>
 

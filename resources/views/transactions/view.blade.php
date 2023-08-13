@@ -49,7 +49,7 @@
                             </tr>
                         </table>                
 
-                        @if ($transaction->FineTotal == NULL)
+                        @if ($transaction->FineTotal === NULL)
                         <div style="float: right; margin: 20px">
                             <form method="post" action="{{ route('transactions.return', $transaction->id)}}">
                                 @csrf

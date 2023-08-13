@@ -64,7 +64,7 @@
                                 @method('post')
 
                                 <input type="hidden" value="{{ $book->id }}" name="book_id" />
-                                <x-primary-button disabled style="background-color: orange;">{{ __('Add to Cart') }}</x-primary-button>
+                                <x-primary-button style="background-color: orange;">{{ __('Add to Cart') }}</x-primary-button>
                             </form>
                         @else 
                             <x-primary-button style="background-color: grey;">{{ __('Out of Stock!') }}</x-primary-button>

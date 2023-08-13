@@ -4,6 +4,7 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BookTypesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
     Route::post('/transactions/return/{id}', [TransactionController::class, 'return'])->name('transactions.return');
+
+    Route::get('/reports/list', [ReportController::class, 'list_report'])->name('reports.list');
+    Route::get('/reports/chart', [ReportController::class, 'chart_report'])->name('reports.chart');
 });
 
 require __DIR__.'/auth.php';

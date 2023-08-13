@@ -30,26 +30,12 @@ class Transaction extends Model
 
     }
 
-    public static function getTransactionWithDetails($transaction_id) {
+    public static function getDataForChart() {
         $tx = DB::select("SELECT 
-                t.`TransCode`,
-                t.`TransDate`,
-                t.`FineTotal`,
-                b.`BookName`,
-                td.`Qty`,
-                td.`ReturnDate`,
-                td.`Fine`,
-                td.`FineDays`,
-                bt.`BookType`,
-                u.`name`,
-                u.`email`
-                FROM `transactions` t
-                JOIN `transaction_details` td ON td.`TransId` = t.`id`
-                JOIN books b ON b.`id` = td.`BookId`
-                JOIN `book_types` bt ON bt.`id` = b.`BookTypeId`
-                JOIN users u ON u.`id` = t.CreatedBy
-                WHERE t.`id` = {$transaction_id}");
+                        COUNT(IF(t.`FineTotal` = 0, 1, NULL)) AS on_time,
+                        COUNT(IF(t.`FineTotal` > 0, 1 , NULL)) AS late
+                        FROM `transactions` t;");
         
-        return $tx;
+        return $tx[0];
     }
 }
