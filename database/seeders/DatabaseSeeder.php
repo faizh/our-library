@@ -17,10 +17,17 @@ class DatabaseSeeder extends Seeder
         $this->call([RoleSeeder::class]);
         
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Administrator',
+            'email' => 'admin@admin.com',
             'password'  => Hash::make('password'),
             'role_id' => Roles::getRoleAdministrator()
-        ]);        
+        ]);      
+        
+        \App\Models\User::factory()->create([
+            'name' => 'User Test',
+            'email' => 'user@user.com',
+            'password'  => Hash::make('password'),
+            'role_id' => Roles::getRoleUser()
+        ]);      
     }
 }
